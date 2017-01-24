@@ -5,7 +5,7 @@ STATUS=0
 
 # IF top-level build file, run that
 if [ -e "$MODULE_ROOT/build.sh" ]; then
-	ti build -p ios --build-only
+	./build.sh
 else
 	# If iOS module exists, build
 	if [ -d "$MODULE_ROOT/ios/" ]; then
@@ -17,7 +17,7 @@ else
 		cd $MODULE_ROOT/ios/
 		cp $MODULE_ROOT/titanium.xcconfig titanium.xcconfig
 		cat titanium.xcconfig
-		ti build -p ios --build-only
+		./build.py
 
 		let STATUS=$?
 		if (( "$RETSTATUS" == "0" )) && (( "$STATUS" != "0" )); then
@@ -91,7 +91,7 @@ else
 	  mkdir -p build/docs
 
 	  ant clean
-	  ti build -p android --build-only
+	  ant
 
 	  let STATUS=$?
 	  if (( "$RETSTATUS" == "0" )) && (( "$STATUS" != "0" )); then

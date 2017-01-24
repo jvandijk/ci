@@ -1,5 +1,5 @@
 #!/bin/bash
-# Argument = -sdk 6.0.1.GA
+# Argument = -sdk 3.1.2.GA
 OPTIND=1    # also remember to initialize your flags and other variables
 
 usage()
@@ -11,12 +11,12 @@ Installs various pre-requisites for building a module.
 
 OPTIONS:
    -h      Show this message
-   -s      Version of Titanium SDK to use. If not specified, uses 6.0.1.GA
+   -s      Version of Titanium SDK to use. If not specified, uses 5.3.0.GA
    -a      Version of Android SDK to install. If not specified, uses 23
 EOF
 }
 
-export TITANIUM_SDK_VERSION="6.0.1.GA"
+export TITANIUM_SDK_VERSION="5.3.0.GA"
 export TITANIUM_ANDROID_API="23"
 while getopts ":h:s:a:" OPTION
 do
@@ -44,7 +44,13 @@ brew install jq # process JSON
 
 sudo npm install -g titanium
 titanium login travisci@appcelerator.com travisci
-titanium sdk install -b master --no-progress-bars
+titanium sdk install latest --no-progress-bars
+
+# Android SDK seems to require newer version of SDK
+echo
+echo "Installing $TITANIUM_SDK_VERSION"
+echo
+titanium sdk install -d $TITANIUM_SDK_VERSION --no-progress-bars
 
 export TITANIUM_ROOT=`ti sdk list -o json | jq -r '.defaultInstallLocation'`
 export TITANIUM_SDK=`ti sdk list -o json | jq -r '.installed[.activeSDK]'`
