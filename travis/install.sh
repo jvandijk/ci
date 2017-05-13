@@ -1,5 +1,5 @@
 #!/bin/bash
-# Argument = -sdk 3.1.2.GA
+# Argument = -sdk 6.0.4.GA
 OPTIND=1    # also remember to initialize your flags and other variables
 
 usage()
@@ -11,12 +11,12 @@ Installs various pre-requisites for building a module.
 
 OPTIONS:
    -h      Show this message
-   -s      Version of Titanium SDK to use. If not specified, uses 5.3.0.GA
+   -s      Version of Titanium SDK to use. If not specified, uses 6.0.4.GA
    -a      Version of Android SDK to install. If not specified, uses 23
 EOF
 }
 
-export TITANIUM_SDK_VERSION="5.3.0.GA"
+export TITANIUM_SDK_VERSION="6.0.4.GA"
 export TITANIUM_ANDROID_API="23"
 while getopts ":h:s:a:" OPTION
 do
