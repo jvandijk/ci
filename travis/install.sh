@@ -1,5 +1,5 @@
 #!/bin/bash
-# Argument = -sdk 6.0.4.GA
+# Argument = -sdk 6.1.0.GA
 OPTIND=1    # also remember to initialize your flags and other variables
 
 usage()
@@ -16,7 +16,7 @@ OPTIONS:
 EOF
 }
 
-export TITANIUM_SDK_VERSION="6.0.4.GA"
+export TITANIUM_SDK_VERSION="6.1.0.GA"
 export TITANIUM_ANDROID_API="23"
 while getopts ":h:s:a:" OPTION
 do
