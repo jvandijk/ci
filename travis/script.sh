@@ -5,7 +5,7 @@ STATUS=0
 
 # IF top-level build file, run that
 if [ -e "$MODULE_ROOT/build.sh" ]; then
-	./build.sh
+	ti build --build-only
 else
 	# If iOS module exists, build
 	if [ -d "$MODULE_ROOT/ios/" ]; then
@@ -17,7 +17,7 @@ else
 		cd $MODULE_ROOT/ios/
 		cp $MODULE_ROOT/titanium.xcconfig titanium.xcconfig
 		cat titanium.xcconfig
-		./build.py
+		ti build -p ios --build-only
 
 		let STATUS=$?
 		if (( "$RETSTATUS" == "0" )) && (( "$STATUS" != "0" )); then
@@ -29,25 +29,20 @@ else
 			MODULE_VERSION=$(sed -n 's/^version: \([^ ]*\).*/\1/p' manifest)
 			echo "Module Info: " $MODULE_ID '@' $MODULE_VERSION
 
-			#Install module
+			# Install module
 			echo "Installing module"
 			ti sdk install $MODULE_ID* -q
 
-			#This already happens in the previous script
-			#echo "Downloading latest SDK"
-			#ti sdk install
-			#ti sdk select latest
-
-			#Create new application
+			# Create new application
 			echo "Creating new application"
 			ti create -t app -p ios -d "./TestModule" -n "TestModule" --id "com.appc.TestModule" -u "http://appcelerator.com" --force -q
 			cd ./TestModule/TestModule
 
-			#Append module to manifest
+			# Append module to manifest
 			echo "Add module to application"
 			sed -i "" 's/<modules>/&<module version="'$MODULE_VERSION'">'$MODULE_ID'<\/module>/g' tiapp.xml
 
-			#Configure app.js
+			# Configure app.js
 			MODULE_EXAMPLE=$HOME/Library/Application\ Support/Titanium/modules/iphone/$MODULE_ID/$MODULE_VERSION/example/
 			if [ -e "$MODULE_EXAMPLE/app.js" ]; then
 				echo "Copying module example"
@@ -60,7 +55,7 @@ else
 				cd ../
 			fi
 
-			#Build application but do not run simulator
+			# Build application but do not run simulator
 			echo "Build application"
 			ti build -b -p ios -d "./" —log-level info
 
@@ -72,7 +67,7 @@ else
 		fi
 	fi
 
-	# if Android module exists, build
+	# If Android module exists, build
 	if [ -d "$MODULE_ROOT/android/" ]; then
 
 	  echo
@@ -90,8 +85,7 @@ else
 	  # if build/docs folder doesn't exist, create it
 	  mkdir -p build/docs
 
-	  ant clean
-	  ant
+	  ti build -p android --build-only
 
 	  let STATUS=$?
 	  if (( "$RETSTATUS" == "0" )) && (( "$STATUS" != "0" )); then
