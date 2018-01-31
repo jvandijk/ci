@@ -54,7 +54,7 @@ titanium sdk install -d $TITANIUM_SDK_VERSION --no-progress-bars
 
 export TITANIUM_ROOT=`ti sdk list -o json | jq -r '.defaultInstallLocation'`
 export TITANIUM_SDK=`ti sdk list -o json | jq -r '.installed[.activeSDK]'`
-mkdir -p "$TITANIUM_ROOT/sdks/"
+mkdir -p "$TITANIUM_ROOT/sdks/android-sdk"
 
 # Install artifact uploader
 TRAVIS_GEM=`gem list travis-artifacts | grep "travis"`
@@ -74,17 +74,17 @@ if [ -d "$MODULE_ROOT/android/" ]; then
 
   # Install Android SDK
   echo
-  echo "Checking existance of $TITANIUM_ROOT/sdks/android-sdk-macosx"
+  echo "Checking existance of $TITANIUM_ROOT/sdks/android-sdk"
   echo
 
   ANDROID_HOME=`ti info -t android -o json | jq -r '.android.sdk.path'`
 
   if [ ! -d "$ANDROID_HOME" ]; then
 
-    cd "$TITANIUM_ROOT/sdks/"
-    wget https://dl.google.com/android/android-sdk_r24.4.1-macosx.zip
-    unzip -qq -o android-sdk_r24.4.1-macosx.zip
-    ANDROID_HOME=${PWD}/android-sdk-macosx
+    cd "$TITANIUM_ROOT/sdks/android-sdk"
+    wget https://dl.google.com/android/repository/sdk-tools-darwin-3859397.zip
+    unzip -qq -o sdk-tools-darwin-3859397.zip
+    ANDROID_HOME=${PWD}/android-sdk
     titanium config android.sdkPath "$ANDROID_HOME"
 
   fi
@@ -94,16 +94,14 @@ if [ -d "$MODULE_ROOT/android/" ]; then
 
   echo "Installing and configuring Android SDK + Tools"
 
-  # Install required Android components.
-  # Update tools first so we get latest version of tools and latest repository URL is used to fetch the other packages
-  echo yes | android -s update sdk --no-ui --all --filter platform-tools
-  echo yes | android -s update sdk --no-ui --all --filter tools
-  echo yes | android -s update sdk --no-ui --all --filter build-tools-$TITANIUM_ANDROID_API.0.3
-  echo yes | android -s update sdk --no-ui --all --filter android-21 # Need android 21 because module scripts are hard-coded to this for docgen
-  echo yes | android -s update sdk --no-ui --all --filter android-$TITANIUM_ANDROID_API
-  echo yes | android -s update sdk --no-ui --all --filter addon-google_apis-google-$TITANIUM_ANDROID_API
-  echo yes | android -s update sdk --no-ui --all --filter extra-android-support
-
+  # Install required Android components
+  echo yes | sdkmanager --licenses
+  sdkmanager "platform-tools"
+  sdkmanager "tools"
+  sdkmanager "build-tools;$TITANIUM_ANDROID_API.0.3"
+  sdkmanager "platforms;android-$TITANIUM_ANDROID_API"
+  # echo yes | android -s update sdk --no-ui --all --filter addon-google_apis-google-$TITANIUM_ANDROID_API
+  
   # NDK r11c
   echo
   echo "Checking existance of $MODULE_ROOT/android-ndk-r11c"
