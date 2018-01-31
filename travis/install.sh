@@ -44,7 +44,6 @@ brew install jq # process JSON
 
 sudo npm install -g titanium
 titanium login travisci@appcelerator.com travisci
-titanium sdk install latest --no-progress-bars
 
 # Android SDK seems to require newer version of SDK
 echo
