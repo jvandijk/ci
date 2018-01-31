@@ -96,8 +96,8 @@ if [ -d "$MODULE_ROOT/android/" ]; then
 
   # Install required Android components.
   # Update tools first so we get latest version of tools and latest repository URL is used to fetch the other packages
-  echo yes | android -s update sdk --no-ui --all --filter tools
   echo yes | android -s update sdk --no-ui --all --filter platform-tools
+  echo yes | android -s update sdk --no-ui --all --filter tools
   echo yes | android -s update sdk --no-ui --all --filter build-tools-$TITANIUM_ANDROID_API.0.3
   echo yes | android -s update sdk --no-ui --all --filter android-21 # Need android 21 because module scripts are hard-coded to this for docgen
   echo yes | android -s update sdk --no-ui --all --filter android-$TITANIUM_ANDROID_API
