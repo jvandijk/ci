@@ -97,7 +97,7 @@ if [ -d "$MODULE_ROOT/android/" ]; then
   echo y | sdkmanager "platform-tools"
   echo y | sdkmanager "build-tools;$TITANIUM_ANDROID_API.0.3"
   echo y | sdkmanager "platforms;android-$TITANIUM_ANDROID_API"
-  echo y | sdkmanager --licenses
+  yes | sdkmanager --licenses
   # echo yes | android -s update sdk --no-ui --all --filter addon-google_apis-google-$TITANIUM_ANDROID_API
   
   # NDK r11c
