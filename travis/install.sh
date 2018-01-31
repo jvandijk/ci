@@ -95,13 +95,13 @@ if [ -d "$MODULE_ROOT/android/" ]; then
 
   # Install required Android components
   echo y | sdkmanager "platform-tools"
+  echo y | sdkmanager "tools"
   echo y | sdkmanager "build-tools;23.0.3"
-  echo y | sdkmanager "build-tools;$TITANIUM_ANDROID_API.0.3"
   echo y | sdkmanager "platforms;android-$TITANIUM_ANDROID_API"
   yes | sdkmanager --licenses
   # echo yes | android -s update sdk --no-ui --all --filter addon-google_apis-google-$TITANIUM_ANDROID_API
   
-  # NDK r11c
+  # NDK r14b
   echo
   echo "Checking existance of $MODULE_ROOT/android-ndk-r14b"
   echo
