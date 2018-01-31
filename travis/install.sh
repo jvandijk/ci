@@ -90,7 +90,7 @@ if [ -d "$MODULE_ROOT/android/" ]; then
   fi
 
   export ANDROID_HOME
-  export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
+  export PATH=${PATH}:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools
 
   echo "Installing and configuring Android SDK + Tools"
 
