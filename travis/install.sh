@@ -97,23 +97,22 @@ if [ -d "$MODULE_ROOT/android/" ]; then
   # Install required Android components
   echo yes | sdkmanager --licenses
   sdkmanager "platform-tools"
-  sdkmanager "tools"
   sdkmanager "build-tools;$TITANIUM_ANDROID_API.0.3"
   sdkmanager "platforms;android-$TITANIUM_ANDROID_API"
   # echo yes | android -s update sdk --no-ui --all --filter addon-google_apis-google-$TITANIUM_ANDROID_API
   
   # NDK r11c
   echo
-  echo "Checking existance of $MODULE_ROOT/android-ndk-r11c"
+  echo "Checking existance of $MODULE_ROOT/android-ndk-r14b"
   echo
 
   ANDROID_NDK=`ti info -t android -o json | jq -r '.android.ndk.path'`
 
   if [ ! -d "$ANDROID_NDK" ]; then
     cd "$MODULE_ROOT"
-    wget http://dl.google.com/android/repository/android-ndk-r11c-darwin-x86_64.zip
-    unzip -q -o android-ndk-r11c-darwin-x86_64.zip
-    ANDROID_NDK=${PWD}/android-ndk-r11c
+    wget https://dl.google.com/android/repository/android-ndk-r14b-darwin-x86_64.zip
+    unzip -q -o android-ndk-r14b-darwin-x86_64.zip
+    ANDROID_NDK=${PWD}/android-ndk-r14b
     titanium config android.ndkPath $ANDROID_NDK
   fi
 
