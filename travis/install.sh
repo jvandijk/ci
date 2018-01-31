@@ -103,17 +103,18 @@ if [ -d "$MODULE_ROOT/android/" ]; then
   
   # NDK r14b
   echo
-  echo "Checking existance of $MODULE_ROOT/android-ndk-r14b"
+  echo "Checking existance of $TITANIUM_ROOT/sdks/android-sdk/ndk-bundle"
   echo
 
   ANDROID_NDK=`ti info -t android -o json | jq -r '.android.ndk.path'`
 
   if [ ! -d "$ANDROID_NDK" ]; then
-    cd "$MODULE_ROOT"
+    cd "$TITANIUM_ROOT/sdks/android-sdk"
     wget https://dl.google.com/android/repository/android-ndk-r14b-darwin-x86_64.zip
     unzip -q -o android-ndk-r14b-darwin-x86_64.zip
-    ANDROID_NDK=${PWD}/android-ndk-r14b
-    titanium config android.ndkPath $ANDROID_NDK
+    mv android-ndk-r14b ndk-bundle
+    ANDROID_NDK=${PWD}/ndk-bundle
+    titanium config android.ndkPath "$ANDROID_NDK"
   fi
 
   export ANDROID_NDK
