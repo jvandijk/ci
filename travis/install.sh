@@ -83,7 +83,7 @@ if [ -d "$MODULE_ROOT/android/" ]; then
     cd "$TITANIUM_ROOT/sdks/android-sdk"
     wget https://dl.google.com/android/repository/sdk-tools-darwin-3859397.zip
     unzip -qq -o sdk-tools-darwin-3859397.zip
-    ANDROID_HOME=${PWD}/android-sdk
+    ANDROID_HOME=${PWD}
     titanium config android.sdkPath "$ANDROID_HOME"
 
   fi
