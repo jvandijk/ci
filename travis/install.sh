@@ -85,7 +85,7 @@ if [ -d "$MODULE_ROOT/android/" ]; then
     wget https://dl.google.com/android/android-sdk_r24.4.1-macosx.zip
     unzip -qq -o android-sdk_r24.4.1-macosx.zip
     ANDROID_HOME=${PWD}/android-sdk-macosx
-    titanium config android.sdkPath $ANDROID_HOME
+    titanium config android.sdkPath "$ANDROID_HOME"
 
   fi
 
