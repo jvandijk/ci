@@ -97,6 +97,7 @@ if [ -d "$MODULE_ROOT/android/" ]; then
   echo y | sdkmanager "platform-tools"
   echo y | sdkmanager "tools"
   echo y | sdkmanager "build-tools;23.0.3"
+  echo y | sdkmanager "platforms;android-26"
   echo y | sdkmanager "platforms;android-$TITANIUM_ANDROID_API"
   yes | sdkmanager --licenses
   # echo yes | android -s update sdk --no-ui --all --filter addon-google_apis-google-$TITANIUM_ANDROID_API
