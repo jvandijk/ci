@@ -96,11 +96,13 @@ if [ -d "$MODULE_ROOT/android/" ]; then
   # Install required Android components
   yes | sdkmanager "platform-tools" > /dev/null
   yes | sdkmanager "tools" > /dev/null
-  yes | sdkmanager "build-tools;23.0.3" > /dev/null
+  yes | sdkmanager "build-tools;$TITANIUM_ANDROID_API.0.3" > /dev/null
   yes | sdkmanager "platforms;android-26" > /dev/null
   yes | sdkmanager "platforms;android-$TITANIUM_ANDROID_API" > /dev/null
   yes | sdkmanager --licenses > /dev/null
   sdkmanager --list || true
+  
+  titanium config android.buildTools.selectedVersion $TITANIUM_ANDROID_API.0.3
   
   # NDK r14b
   echo
