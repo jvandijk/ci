@@ -53,7 +53,7 @@ titanium sdk install -q -d $TITANIUM_SDK_VERSION --no-progress-bars
 
 export TITANIUM_ROOT=`ti sdk list -o json | jq -r '.defaultInstallLocation'`
 export TITANIUM_SDK=`ti sdk list -o json | jq -r '.installed[.activeSDK]'`
-mkdir -p "$TITANIUM_ROOT/sdks/android-sdk"
+mkdir -p "$HOME/android-sdk"
 
 # Install artifact uploader
 TRAVIS_GEM=`gem list travis-artifacts | grep "travis"`
@@ -73,14 +73,14 @@ if [ -d "$MODULE_ROOT/android/" ]; then
 
   # Install Android SDK
   echo
-  echo "Checking existance of $TITANIUM_ROOT/sdks/android-sdk"
+  echo "Checking existance of $HOME/android-sdk"
   echo
 
   ANDROID_HOME=`ti info -t android -o json | jq -r '.android.sdk.path'`
 
   if [ ! -d "$ANDROID_HOME" ]; then
 
-    cd "$TITANIUM_ROOT/sdks/android-sdk"
+    cd "$HOME/android-sdk"
     wget -q https://dl.google.com/android/repository/sdk-tools-darwin-3859397.zip
     unzip -qq -o sdk-tools-darwin-3859397.zip
     ANDROID_HOME=${PWD}
@@ -106,7 +106,7 @@ if [ -d "$MODULE_ROOT/android/" ]; then
   
   # NDK r14b
   echo
-  echo "Checking existance of $TITANIUM_ROOT/sdks/android-sdk/ndk-bundle"
+  echo "Checking existance of $HOME/android-sdk/ndk-bundle"
   echo
 
   ANDROID_NDK=`ti info -t android -o json | jq -r '.android.ndk.path'`
@@ -114,7 +114,7 @@ if [ -d "$MODULE_ROOT/android/" ]; then
   if [ ! -d "$ANDROID_NDK" ]; then
     echo "Download & install NDK bundle"
     echo
-    cd "$TITANIUM_ROOT/sdks/android-sdk"
+    cd "$HOME/android-sdk"
     wget -q https://dl.google.com/android/repository/android-ndk-r14b-darwin-x86_64.zip
     unzip -qq -o android-ndk-r14b-darwin-x86_64.zip
     mv android-ndk-r14b ndk-bundle
