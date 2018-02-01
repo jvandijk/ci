@@ -43,7 +43,7 @@ brew update
 brew install jq # process JSON
 
 sudo npm install -g titanium
-titanium login travisci@appcelerator.com travisci
+# titanium login travisci@appcelerator.com travisci
 
 # Android SDK seems to require newer version of SDK
 echo
