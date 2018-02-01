@@ -76,15 +76,13 @@ if [ -d "$MODULE_ROOT/android/" ]; then
   echo "Checking existance of $HOME/android-sdk"
   echo
 
-  ANDROID_HOME=`ti info -t android -o json | jq -r '.android.sdk.path'`
+  ANDROID_HOME=$HOME/android-sdk
 
   if [ ! -d "$ANDROID_HOME" ]; then
 
     cd "$HOME/android-sdk"
     wget -q https://dl.google.com/android/repository/sdk-tools-darwin-3859397.zip
     unzip -qq -o sdk-tools-darwin-3859397.zip
-    ANDROID_HOME=${PWD}
-    titanium config android.sdkPath "$ANDROID_HOME"
 
   fi
 
@@ -102,6 +100,7 @@ if [ -d "$MODULE_ROOT/android/" ]; then
   yes | sdkmanager --licenses > /dev/null
   sdkmanager --list || true
   
+  titanium config android.sdkPath "$ANDROID_HOME"
   titanium config android.buildTools.selectedVersion $TITANIUM_ANDROID_API.0.3
   
   # NDK r14b
@@ -109,7 +108,7 @@ if [ -d "$MODULE_ROOT/android/" ]; then
   echo "Checking existance of $HOME/android-sdk/ndk-bundle"
   echo
 
-  ANDROID_NDK=`ti info -t android -o json | jq -r '.android.ndk.path'`
+  ANDROID_NDK=$HOME/android-sdk/ndk-bundle
 
   if [ ! -d "$ANDROID_NDK" ]; then
     echo "Download & install NDK bundle"
@@ -118,11 +117,10 @@ if [ -d "$MODULE_ROOT/android/" ]; then
     wget -q https://dl.google.com/android/repository/android-ndk-r14b-darwin-x86_64.zip
     unzip -qq -o android-ndk-r14b-darwin-x86_64.zip
     mv android-ndk-r14b ndk-bundle
-    ANDROID_NDK=${PWD}/ndk-bundle
-    titanium config android.ndkPath "$ANDROID_NDK"
   fi
 
   export ANDROID_NDK
+  titanium config android.ndkPath "$ANDROID_NDK"
 
   # Install Java 6 if necessary for get around http://bugs.java.com/bugdatabase/view_bug.do?bug_id=7131356
   java_installed=$( grep "commonjs:\s*true" -c  $MODULE_ROOT/android/manifest )
