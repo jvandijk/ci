@@ -39,7 +39,7 @@ do
 done
 
 # Need to install jq to process the JSON
-brew update
+brew update > /dev/null
 brew install jq # process JSON
 
 sudo npm install -g titanium
