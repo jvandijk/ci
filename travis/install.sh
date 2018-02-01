@@ -100,6 +100,7 @@ if [ -d "$MODULE_ROOT/android/" ]; then
   yes | sdkmanager "platforms;android-26" > /dev/null
   yes | sdkmanager "platforms;android-$TITANIUM_ANDROID_API" > /dev/null
   yes | sdkmanager --licenses > /dev/null
+  sdkmanager --list || true
   
   # NDK r14b
   echo
@@ -109,6 +110,8 @@ if [ -d "$MODULE_ROOT/android/" ]; then
   ANDROID_NDK=`ti info -t android -o json | jq -r '.android.ndk.path'`
 
   if [ ! -d "$ANDROID_NDK" ]; then
+    echo "Download & install NDK bundle"
+    echo
     cd "$TITANIUM_ROOT/sdks/android-sdk"
     wget -q https://dl.google.com/android/repository/android-ndk-r14b-darwin-x86_64.zip
     unzip -qq -o android-ndk-r14b-darwin-x86_64.zip
