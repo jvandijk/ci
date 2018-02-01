@@ -89,18 +89,23 @@ if [ -d "$MODULE_ROOT/android/" ]; then
   fi
 
   export ANDROID_HOME
-  export PATH=${PATH}:${ANDROID_HOME}/tools/bin:${ANDROID_HOME}/platform-tools
+  export PATH=${PATH}:${ANDROID_HOME}/tools:${ANDROID_HOME}/platform-tools
 
   echo "Installing and configuring Android SDK + Tools"
 
   # Install required Android components
-  yes | sdkmanager "platform-tools"
-  yes | sdkmanager "tools"
-  yes | sdkmanager "build-tools;23.0.3"
-  yes | sdkmanager "platforms;android-26"
-  yes | sdkmanager "platforms;android-$TITANIUM_ANDROID_API"
-  yes | sdkmanager --licenses
-  # echo yes | android -s update sdk --no-ui --all --filter addon-google_apis-google-$TITANIUM_ANDROID_API
+  echo yes | android -s update sdk --no-ui --all --filter platform-tools
+  echo yes | android -s update sdk --no-ui --all --filter tools
+  echo yes | android -s update sdk --no-ui --all --filter build-tools-23.0.3
+  echo yes | android -s update sdk --no-ui --all --filter android-26 # Need android 26 because module scripts are hard-coded to this for docgen
+  echo yes | android -s update sdk --no-ui --all --filter android-$TITANIUM_ANDROID_API
+  echo yes | android -s update sdk --no-ui --all --filter addon-google_apis-google-$TITANIUM_ANDROID_API
+  #yes | sdkmanager "platform-tools"
+  #yes | sdkmanager "tools"
+  #yes | sdkmanager "build-tools;23.0.3"
+  #yes | sdkmanager "platforms;android-26"
+  #yes | sdkmanager "platforms;android-$TITANIUM_ANDROID_API"
+  #yes | sdkmanager --licenses
   
   # NDK r14b
   echo
