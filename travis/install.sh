@@ -73,13 +73,14 @@ if [ -d "$MODULE_ROOT/android/" ]; then
 
   # Install Android SDK
   echo
-  echo "Checking existance of $HOME/android-sdk"
+  echo "Checking existance of $HOME/android-sdk/tools"
   echo
 
   ANDROID_HOME=$HOME/android-sdk
 
-  if [ ! -d "$ANDROID_HOME" ]; then
-
+  if [ ! -d "$ANDROID_HOME/tools" ]; then
+    echo "Download & install SDK tools"
+    echo
     cd "$HOME/android-sdk"
     wget -q https://dl.google.com/android/repository/sdk-tools-darwin-3859397.zip
     unzip -qq -o sdk-tools-darwin-3859397.zip
@@ -98,7 +99,6 @@ if [ -d "$MODULE_ROOT/android/" ]; then
   yes | sdkmanager "platforms;android-26" > /dev/null
   yes | sdkmanager "platforms;android-$TITANIUM_ANDROID_API" > /dev/null
   yes | sdkmanager --licenses > /dev/null
-  sdkmanager --list || true
   
   titanium config android.sdkPath "$ANDROID_HOME"
   titanium config android.buildTools.selectedVersion $TITANIUM_ANDROID_API.0.3
